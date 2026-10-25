@@ -1,1 +1,108 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090b10"><title>Рулетка подарков — Helper’s Team TULA</title><link rel="stylesheet" href="css/style.css"><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><script defer src="js/main.js"></script><script defer src="js/gifts.js"></script></head><body><header class="site-header"><a class="brand" href="index.html"><span class="logo-slot"><img src="assets/logo.png" alt="Логотип" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="logo-fallback">HT</span></span><span class="brand-name"><span>Helper’s Team</span> <b>TULA</b></span></a><a class="back-link" href="index.html">← Главная</a></header><main class="page-wrap gifts-page"><div class="page-heading"><div class="eyebrow">03 / LUCKY WHEEL</div><h1>Рулетка <span class="cyan-text">подарков</span></h1><p>Шесть секторов, шесть равных шансов. Что выпадет именно тебе?</p></div><section class="gift-game"><div class="wheel-column"><div class="wheel-pointer" aria-hidden="true"></div><div class="wheel-frame"><div id="giftWheel" class="gift-wheel" role="img" aria-label="Колесо из шести секторов с призами"><div class="wheel-center"><span>HT</span><small>TULA</small></div></div></div><div class="wheel-legend"><span><i class="legend-cyan"></i> 1/6 вероятность на каждый сектор</span><span>Результат выбирается до вращения</span></div></div><div class="gift-control"><div class="panel-label">LUCKY WHEEL <span class="live-dot">● READY</span></div><div class="gift-result" id="giftResult" aria-live="polite"><span class="result-kicker">ПОСЛЕДНИЙ РЕЗУЛЬТАТ</span><strong>ТВОЙ ПРИЗ?</strong><p>Нажми кнопку — колесо выберет один из шести исходов.</p></div><button id="spinGifts" class="button button-cyan button-large">Крутить рулетку <span>↻</span></button><p class="status-line" id="giftStatus" aria-live="polite">У каждого сектора вероятность 1/6.</p><div class="prize-list"><h2>Возможные исходы</h2><ol id="prizeList"></ol></div></div></section><section class="rules-strip"><b>ПРАВИЛА</b><span>Все призы имеют одинаковую вероятность — 1/6. Результат соответствует сектору, на котором остановится указатель. Эффекты не влияют на шансы.</section></main><footer class="site-footer"><span>HELPER’S TEAM <b>TULA</b></span><span>6 PRIZES / EQUAL ODDS <i>◆</i></span></footer><dialog id="giftModal" class="result-modal"><button class="modal-close" id="closeGiftModal" aria-label="Закрыть">×</button><div class="modal-kicker">ТВОЙ РЕЗУЛЬТАТ</div><div class="modal-spark">✦</div><h2 id="modalPrize">Твой приз</h2><p>Колесо остановилось на выбранном секторе.</p><button class="button button-cyan" id="modalAgain">Крутить ещё раз</button></dialog></body></html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d16">
+  <title>Рулетка подарков — Helper's Team TULA</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">HT</span>
+      <span class="brand-name">HELPER'S TEAM <b>TULA</b></span>
+    </a>
+    <a class="back-link" href="index.html">← Все рулетки</a>
+  </header>
+
+  <main class="container">
+    <section class="page-heading">
+      <p class="eyebrow">РУЛЕТКА № 03</p>
+      <h1>Рулетка <span>подарков</span></h1>
+      <p>Никаких догадок — только случайный выбор и приятные сюрпризы.</p>
+    </section>
+
+    <section class="game-layout game-layout-single">
+      <div class="game-main">
+        <div class="game-panel gifts-game-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker">ЧТО ТЕБЕ ДОСТАНЕТСЯ?</p>
+              <h2 id="giftTitle">Твой подарок</h2>
+            </div>
+            <span class="panel-symbol" aria-hidden="true">✧</span>
+          </div>
+
+          <div class="gift-stage" id="giftStage" aria-live="polite">
+            <div class="gift-placeholder" id="giftPlaceholder">
+              <span class="gift-ribbon" aria-hidden="true">✧</span>
+              <span>Твой сюрприз ждёт</span>
+            </div>
+            <div class="gift-result" id="giftResult" hidden></div>
+          </div>
+
+          <div class="ticker" id="giftTicker" aria-hidden="true">
+            <span>✧</span>
+            <span>✦</span>
+            <span>✧</span>
+            <span>✦</span>
+            <span>✧</span>
+          </div>
+
+          <button class="primary-button" id="spinGift" type="button">
+            Открыть подарок <span aria-hidden="true">↗</span>
+          </button>
+
+          <p class="status-message" id="giftStatus" aria-live="polite">
+            Готова узнать, что тебе выпадет?
+          </p>
+        </div>
+      </div>
+
+      <aside class="game-sidebar">
+        <div class="selector-panel">
+          <p class="panel-kicker">ВЫБЕРИ РУЛЕТКУ</p>
+          <h2>Какой сюрприз?</h2>
+
+          <div class="roulette-options" id="giftTypes">
+            <button class="roulette-option active" type="button" data-type="normal">
+              <span class="option-icon">✧</span>
+              <span class="option-text">
+                <strong>Обычная</strong>
+                <small>Классический сюрприз</small>
+              </span>
+              <span class="option-arrow">›</span>
+            </button>
+
+            <button class="roulette-option" type="button" data-type="special">
+              <span class="option-icon">✦</span>
+              <span class="option-text">
+                <strong>Особая</strong>
+                <small>Что-то интересное</small>
+              </span>
+              <span class="option-arrow">›</span>
+            </button>
+
+            <button class="roulette-option" type="button" data-type="premium">
+              <span class="option-icon">✹</span>
+              <span class="option-text">
+                <strong>Премиум</strong>
+                <small>Сюрприз повесомее</small>
+              </span>
+              <span class="option-arrow">›</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>HELPER'S TEAM TULA · BLACK RUSSIA</p>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/gifts.js"></script>
+</body>
+</html>
