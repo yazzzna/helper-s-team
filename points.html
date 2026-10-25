@@ -1,121 +1,17 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100d16">
-  <title>Рулетка баллов — Helper's Team TULA</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="index.html" aria-label="На главную">
-      <img class="brand-logo" src="logo.png" alt="BLACK RUSSIA">
-      <span class="brand-name">HELPER'S TEAM <b>TULA</b></span>
-    </a>
-    <a class="back-link" href="index.html">← Все рулетки</a>
-  </header>
-
-  <main class="container">
-    <section class="page-heading">
-      <p class="eyebrow">РУЛЕТКА № 01</p>
-      <h1>Рулетка <span>баллов</span></h1>
-      <p>Выбери режим, нажми на кнопку и узнай свой результат.</p>
-    </section>
-
-    <section class="game-layout game-layout-single">
-      <div class="game-main">
-        <div class="game-panel">
-          <div class="panel-heading">
-            <div>
-              <p class="panel-kicker">ТВОЯ НАГРАДА</p>
-              <h2 id="pointsRange">Обычная рулетка</h2>
-            </div>
-            <span class="panel-symbol" aria-hidden="true">✦</span>
-          </div>
-
-          <div class="number-stage">
-            <span class="result-caption">ТЕБЕ ВЫПАЛО</span>
-            <div class="number-result" id="pointsValue" aria-live="polite">?</div>
-            <span class="result-unit">БАЛЛОВ</span>
-          </div>
-
-          <div class="ticker" id="pointsTicker" aria-hidden="true">
-            <span>✦</span>
-            <span>✧</span>
-            <span>✦</span>
-            <span>✧</span>
-            <span>✦</span>
-          </div>
-
-          <button class="primary-button" id="spinPoints" type="button">
-            Крутить рулетку <span aria-hidden="true">↗</span>
-          </button>
-
-          <p class="status-message" id="pointsStatus" aria-live="polite">
-            Выбери рулетку и испытай удачу!
-          </p>
-        </div>
-
-        <div class="game-info">
-          <div class="info-item">
-            <span class="info-label">Стоимость</span>
-            <strong id="pointsCost">35 баллов</strong>
-          </div>
-          <div class="info-item">
-            <span class="info-label">Диапазон</span>
-            <strong id="pointsRangeInfo">0–65 баллов</strong>
-          </div>
-        </div>
-      </div>
-
-      <aside class="game-sidebar">
-        <div class="selector-panel">
-          <p class="panel-kicker">ВЫБЕРИ РЕЖИМ</p>
-          <h2>Какая сегодня удача?</h2>
-
-          <div class="roulette-options" id="pointTypes">
-            <button class="roulette-option active" type="button" data-type="normal">
-              <span class="option-icon">✧</span>
-              <span class="option-text">
-                <strong>Обычная</strong>
-                <small>Стоимость: 35 баллов</small>
-              </span>
-              <span class="option-arrow">›</span>
-            </button>
-
-            <button class="roulette-option" type="button" data-type="super">
-              <span class="option-icon">✦</span>
-              <span class="option-text">
-                <strong>Супер-рулетка</strong>
-                <small>Стоимость: 45 баллов</small>
-              </span>
-              <span class="option-arrow">›</span>
-            </button>
-
-            <button class="roulette-option" type="button" data-type="mega">
-              <span class="option-icon">✹</span>
-              <span class="option-text">
-                <strong>Мега-рулетка</strong>
-                <small>Стоимость: 55 баллов</small>
-              </span>
-              <span class="option-arrow">›</span>
-            </button>
-          </div>
-        </div>
-      </aside>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>HELPER'S TEAM TULA · BLACK RUSSIA</p>
-  </footer>
-
-  <script src="js/common.js"></script>
-  <script src="js/points.js"></script>
-</body>
-</html>
-=======
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090b10"><title>Рулетка баллов — Helper’s Team TULA</title><link rel="stylesheet" href="css/style.css"><link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><script defer src="js/main.js"></script><script defer src="js/points.js"></script></head><body><header class="site-header"><a class="brand" href="index.html"><span class="logo-slot"><img src="./logo.png" alt="Логотип" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="logo-fallback">HT</span></span><span class="brand-name"><span>Helper’s Team</span> <b>TULA</b></span></a><a class="back-link" href="index.html">← Главная</a></header><main class="page-wrap"><div class="page-heading"><div class="eyebrow">01 / POINTS SYSTEM</div><h1>Рулетка <span class="cyan-text">баллов</span></h1><p>Выбери формат, сделай ставку в баллах и проверь свою удачу.</p></div><section class="type-grid" id="pointTypes" aria-label="Тип рулетки"><button class="type-card selected" data-type="normal"><span class="type-label">ОБЫЧНАЯ</span><strong>35 <small>баллов</small></strong><span>Выигрыш: 0–65</span><p>Для тех, кто не любит рисковать.</p></button><button class="type-card" data-type="super"><span class="type-label">СУПЕР</span><strong>45 <small>баллов</small></strong><span>Выигрыш: 0–90</span><p>Для тех, кто хочет испытать удачу.</p></button><button class="type-card" data-type="mega"><span class="type-label">МЕГА</span><strong>55 <small>баллов</small></strong><span>Выигрыш: 0–150</span><p>Для самых активных и азартных.</p></button></section><section class="game-layout"><div class="game-panel"><div class="panel-label">ВЫПАДЕНИЕ БАЛЛОВ <span class="live-dot">● ГОТОВО</span></div><div class="number-stage"><div class="stage-ring"></div><div class="stage-value" id="pointsValue" aria-live="polite">—</div><div class="stage-caption" id="pointsCaption">ТВОЙ РЕЗУЛЬТАТ</div><div class="stage-ticker" id="pointsTicker">ГОТОВ К ЗАПУСКУ</div></div><div class="button-row"><button id="spinPoints" class="button button-cyan button-large">Крутить рулетку <span>↻</span></button></div><p class="status-line" id="pointsStatus" aria-live="polite">Выбери тип рулетки и нажми кнопку.</p></div><aside class="rules-panel"><div class="panel-label">ПРАВИЛА</div><h2>Как это работает</h2><ul class="rules-list"><li>Стоимость списывается отдельно только по правилам вашей команды.</li><li>Выигрыш показывается отдельно и не уменьшается на стоимость вращения.</li><li>Небольшие призы выпадают чаще крупных.</li><li>Каждое целое значение диапазона может выпасть.</li></ul><div class="rule-chip"><span>ТЕКУЩАЯ СТОИМОСТЬ</span><strong id="pointsCost">35 баллов</strong></div><div class="rule-chip"><span>ДИАПАЗОН ВЫИГРЫША</span><strong id="pointsRange">0–65 баллов</strong></div><a class="text-link" href="index.html">← Вернуться к выбору рулетки</a></aside></section></main><footer class="site-footer"><span>HELPER’S TEAM <b>TULA</b></span><span>RESULTS ARE CLIENT-SIDE <i>◆</i></span></footer></body></html>
->>>>>>> 895b3d9 (Initial commit)
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#080b10"><title>Рулетка баллов · Helper’s Team TULA</title><link rel="stylesheet" href="./css/style.css"><script defer src="./js/main.js"></script><script defer src="./js/points.js"></script></head>
+<body><header class="topbar"><a class="brand" href="./index.html"><img class="brand-logo" src="./logo.png" alt="BLACK RUSSIA" onerror="this.style.display='none'"><span><b>Helper’s Team</b> <strong>TULA</strong><small>BLACK RUSSIA · HELPER ZONE</small></span></a><a class="back-link" href="./index.html">← На главную</a></header>
+<main class="container game-page">
+  <div class="page-heading"><div class="eyebrow">01 / POINTS RANDOMIZER</div><h1>Рулетка <span class="cyan">баллов</span></h1><p>Выбери уровень и проверь свою удачу.</p></div>
+  <div class="game-layout"><section class="panel config-panel"><div class="panel-label">ВЫБЕРИ РЕЖИМ</div>
+    <div class="mode-list">
+      <button class="mode-option active" data-mode="normal"><span class="mode-symbol">✦</span><span><b>Обычная рулетка</b><small>Для тех, кто не любит рисковать</small></span><strong>35 <small>баллов</small></strong></button>
+      <button class="mode-option" data-mode="super"><span class="mode-symbol">✧</span><span><b>Супер-рулетка</b><small>Для тех, кто хочет испытать удачу</small></span><strong>45 <small>баллов</small></strong></button>
+      <button class="mode-option" data-mode="mega"><span class="mode-symbol">✹</span><span><b>Мега-рулетка</b><small>Для самых активных и азартных</small></span><strong>55 <small>баллов</small></strong></button>
+    </div><div class="info-strip">Стоимость указана отдельно и не вычитается из выигрыша.</div>
+  </section>
+  <section class="panel spin-panel"><div class="panel-label">ТВОЙ РЕЗУЛЬТАТ</div><div class="slot-frame"><div class="slot-pointer"></div><div class="slot-window"><div class="slot-track" id="slotTrack"><span>—</span><span>12</span><span>28</span><span>7</span><span>43</span><span>19</span><span>56</span></div></div></div>
+    <div class="result-block"><div class="result-caption" id="resultCaption">ГОТОВ К ЗАПУСКУ</div><div class="result-value"><span id="resultValue">—</span><small>баллов</small></div><p id="resultMessage">Выбери режим и нажми на кнопку.</p></div>
+    <button class="button button-cyan spin-button" id="spinButton">Крутить рулетку <span>↻</span></button><div class="cost-note" id="costNote">Стоимость прокрутки: 35 баллов</div>
+  </section></div>
+</main><footer class="footer"><span>HELPER’S TEAM TULA</span><span>УДАЧИ В ИГРЕ <i>◆</i></span></footer></body></html>
