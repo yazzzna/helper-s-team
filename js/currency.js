@@ -1,5 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const config = {
+(() => {
+  "use strict";
+
+  const configs = {
     small: {
       name: "Малая рулетка ИВ",
       cost: 45,
@@ -23,136 +25,130 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const STORAGE_KEY = "helperTulaCurrencySpinsUsed_v1";
+  const $ = (selector) => document.querySelector(selector);
 
-  function getUsed() {
-    try {
-      const n = Number(localStorage.getItem(STORAGE_KEY));
+  const valueElement = $("#currencyValue");
+  const titleElement = $("#currencyRange");
+  const costElement = $("#currencyCost");
+  const rangeElement = $("#currencyRangeInfo");
+  const statusElement = $("#currencyStatus");
+  const spinButton = $("#spinCurrency");
+  const tickerElement = $("#currencyTicker");
+  const typeButtons = document.querySelectorAll(
+    "#currencyTypes [data-type]"
+  );
 
-      return Number.isInteger(n) && n >= 0
-        ? Math.min(n, 2)
-        : 0;
-    } catch {
-      return 0;
-    }
+  if (
+    !valueElement ||
+    !titleElement ||
+    !costElement ||
+    !rangeElement ||
+    !statusElement ||
+    !spinButton
+  ) {
+    console.error("Рулетка ИВ: не найдены необходимые HTML-элементы.");
+    return;
   }
 
-  function setUsed(n) {
-    try {
-      localStorage.setItem(STORAGE_KEY, String(n));
-    } catch {
-      // Если хранилище недоступно, ограничение действует
-      // только в рамках текущей открытой страницы.
-    }
-  }
+  let selectedType = "small";
+  let isSpinning = false;
 
-  let used = getUsed();
-  let selected = "small";
+  const formatNumber = (number) =>
+    Math.round(number).toLocaleString("ru-RU");
 
-  const cards = [
-    ...document.querySelectorAll("#currencyTypes [data-type]")
-  ];
+  function updateInterface() {
+    const config = configs[selectedType];
 
-  const value = document.getElementById("currencyValue");
-  const stage = document.querySelector(".number-stage");
-  const button = document.getElementById("spinCurrency");
-  const ticker = document.getElementById("currencyTicker");
-  const status = document.getElementById("currencyStatus");
+    titleElement.textContent = config.name;
+    costElement.textContent = `${config.cost} баллов`;
+    rangeElement.textContent =
+      `${formatNumber(config.min)}–${formatNumber(config.max)} ИВ`;
 
-  function updateCounter() {
-    const remaining = Math.max(0, 2 - used);
+    typeButtons.forEach((button) => {
+      const active = button.dataset.type === selectedType;
 
-    document.getElementById("currencyRemaining").textContent =
-      remaining;
-
-    document.getElementById("currencyUses").textContent =
-      `ОСТАЛОСЬ: ${remaining} ИЗ 2`;
-
-    button.disabled = remaining === 0;
-
-    if (remaining === 0) {
-      status.textContent = "Все попытки использованы.";
-    }
-  }
-
-  function selectType(type) {
-    selected = type;
-
-    const item = config[type];
-
-    cards.forEach(card => {
-      const active = card.dataset.type === type;
-
-      card.classList.toggle("selected", active);
-      card.setAttribute("aria-pressed", String(active));
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
     });
-
-    document.getElementById("currencyCost").textContent =
-      `${item.cost} баллов`;
-
-    document.getElementById("currencyRange").textContent =
-      `${HelperRoulette.formatNumber(item.min)}–` +
-      `${HelperRoulette.formatNumber(item.max)} ИВ`;
-
-    if (used < 2) {
-      status.textContent =
-        `${item.name}: стоимость ${item.cost} баллов. ` +
-        `Осталось попыток: ${2 - used}.`;
-    }
   }
 
-  cards.forEach(card => {
-    card.addEventListener("click", () => {
-      if (!button.disabled) {
-        selectType(card.dataset.type);
+  // Чем меньше decay, тем выше шанс получить крупное значение.
+  // Используем распределение с уклоном к большим выигрышам.
+  function getRandomPrize(config) {
+    const random = Math.random();
+    const exponent = Math.max(0.35, Math.min(1, config.decay * 10000));
+
+    const normalized = Math.pow(random, exponent);
+
+    return Math.floor(
+      config.min + normalized * (config.max - config.min)
+    );
+  }
+
+  function setTickerAnimation(active) {
+    if (!tickerElement) return;
+
+    tickerElement.classList.toggle("is-spinning", active);
+  }
+
+  function spin() {
+    // Ограничиваем только одновременные запуски анимации.
+    // Количество попыток не ограничено.
+    if (isSpinning) return;
+
+    isSpinning = true;
+    spinButton.disabled = true;
+    spinButton.setAttribute("aria-busy", "true");
+
+    statusElement.textContent = "Рулетка вращается...";
+    setTickerAnimation(true);
+
+    const config = configs[selectedType];
+    const prize = getRandomPrize(config);
+    const duration = 1600;
+    const startedAt = Date.now();
+
+    const animation = window.setInterval(() => {
+      const randomPreview = Math.floor(
+        config.min + Math.random() * (config.max - config.min)
+      );
+
+      valueElement.textContent = formatNumber(randomPreview);
+
+      if (Date.now() - startedAt >= duration) {
+        window.clearInterval(animation);
+
+        valueElement.textContent = formatNumber(prize);
+        statusElement.textContent =
+          `Твой результат: ${formatNumber(prize)} ИВ!`;
+
+        isSpinning = false;
+        spinButton.disabled = false;
+        spinButton.removeAttribute("aria-busy");
+        setTickerAnimation(false);
       }
+    }, 65);
+  }
+
+  typeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (isSpinning) return;
+
+      const type = button.dataset.type;
+
+      if (!Object.prototype.hasOwnProperty.call(configs, type)) {
+        return;
+      }
+
+      selectedType = type;
+      valueElement.textContent = "?";
+      statusElement.textContent =
+        "Режим выбран. Можешь крутить рулетку!";
+      updateInterface();
     });
   });
 
-  button.addEventListener("click", () => {
-    if (used >= 2 || button.disabled) {
-      return;
-    }
+  spinButton.addEventListener("click", spin);
 
-    // Попытка списывается сразу, чтобы её нельзя было
-    // повторно использовать обычным обновлением страницы.
-    used += 1;
-    setUsed(used);
-    updateCounter();
-
-    const item = config[selected];
-
-    HelperRoulette.runNumberSpin({
-      button,
-      stage,
-      valueNode: value,
-      ticker,
-      status,
-      duration: 3000,
-
-      choose: () =>
-        HelperRoulette.weightedInteger(
-          item.min,
-          item.max,
-          item.decay
-        ),
-
-      format: n => HelperRoulette.formatNumber(n),
-
-      onDone: n => {
-        status.textContent =
-          `Выпало ${HelperRoulette.formatNumber(n)} ИВ. ` +
-          `Использовано попыток: ${used} из 2.`;
-
-        value.classList.remove("confetti");
-        void value.offsetWidth;
-        value.classList.add("confetti");
-
-        updateCounter();
-      }
-    });
-  });
-
-  selectType(selected);
-  updateCounter();
-});
+  updateInterface();
+})();
