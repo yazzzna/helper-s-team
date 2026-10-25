@@ -32,7 +32,48 @@ max-width: 850px {
   }
 }
 
+/* Логотип BLACK RUSSIA вместо текстового HT */
+.brand-logo {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
 
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Не показываем старые блоки с правилами и статистикой */
+.rules-panel,
+.rules-strip,
+.hero-stats {
+  display: none !important;
+}
+
+/* Карточка игры занимает доступную ширину */
+.game-layout,
+.game-layout-single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+max-width: 850px {
+  .game-layout,
+  .game-layout-single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+  }
+}
 
 
 
